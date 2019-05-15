@@ -44,8 +44,14 @@ diningroom.addItem(table);
 bathroom.addItem(sink);
 bathroom.addItem(bathtub);
 
-
-
+let eataction = /eat/;
+let eat = function(action, player, object){
+  if (action == 'eat'){
+  addline("You have eaten the food. You feel dizzy and pass out.")
+  player.move(dungeon)
+  }
+}
+addAction(eataction , eat);
 
 
 player.move(hallway)
