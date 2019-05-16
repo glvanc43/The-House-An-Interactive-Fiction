@@ -23,12 +23,14 @@ let table = new Item("table","fancy.");
 let sink = new Item("sink","not working very well.");
 let bathtub = new Item("bathtub","very dirty.");
 let closet = new Item("closet","filled with clothes.")
+let door = new Item("door","locked. It may need a key.")
 
 // Put them in their spots
 //hallway.addItem(vase);
+dungeon.addItem(door);
 bedroom.addItem(closet);
 hallway.addItem(bedroom);
-hallway.addItem(dungeon);
+//hallway.addItem(dungeon);
 hallway.addItem(bathroom);
 hallway.addItem(kitchen);
 hallway.addItem(diningroom);
@@ -44,14 +46,24 @@ diningroom.addItem(table);
 bathroom.addItem(sink);
 bathroom.addItem(bathtub);
 
-let eataction = /eat/;
-let eat = function(action, player, object){
-  if (action == 'eat'){
-  addline("You have eaten the food. You feel dizzy and pass out.")
+let eatAction = /eat/;
+let eat = function(action, player, object) {
+  if (action == 'eat') {
+    object.eat();
+  }
+  return player;
+}
+//addAction(eatAction, eat);
+//  addline("You have eaten the food. You feel dizzy and pass out.")
+
+  Item.prototype.eat = function() {
+    addLine("You have eaten the " + this.name + ", You feel dizzy and pass out...");
+
   player.move(dungeon)
   }
-}
-addAction(eataction , eat);
+
+
+addAction(eatAction , eat);
 
 
 player.move(hallway)
