@@ -13,7 +13,7 @@ let kitchen = new Room("kitchen","there is good looking food in there...")
 let diningroom = new Room("dining room","there is a wierd looking family in there...")
 let bathroom = new Room("bathroom","it is very messy.")
 let bed = new Item("bed","made of wood.");
-let mirror = new Item("mirror","fancy.");
+let mirror = new Door("mirror","fancy.");
 let key = new Item("key","big and rusty.");
 let knife = new Item("knife","bloody.");
 let plateoffood = new Item("plate of food","very yummy smelling.");
@@ -27,9 +27,12 @@ let door = new Door("door","locked. It may need a key.");
 door.locked = true;
 let creepyfamily = new Item("creepy family", "enjoying their delicious meal.");
 let blindguy = new Item("blind guy sitting in a chair", "sitting quietly.");
+mirror.locked = false;
 
 // Put them in their spots
 //hallway.addItem(vase);
+mirror.addItem(hallway);
+bedroom.addItem(mirror);
 diningroom.addItem(creepyfamily);
 bedroom.addItem(blindguy);
 dungeon.addItem(door);
@@ -41,7 +44,7 @@ hallway.addItem(bathroom);
 hallway.addItem(kitchen);
 hallway.addItem(diningroom);
 bedroom.addItem(bed);
-bedroom.addItem(mirror);
+//bedroom.addItem(mirror);
 dungeon.addItem(key);
 dungeon.addItem(knife);
 kitchen.addItem(plateoffood);
@@ -71,8 +74,6 @@ let eat = function(action, player, object) {
   }
   return player;
 }
-//addAction(eatAction, eat);
-//  addline("You have eaten the food. You feel dizzy and pass out.")
 
   Item.prototype.eat = function() {
     addLine("You have eaten the " + this.name + ", You feel dizzy and pass out...");
@@ -82,7 +83,7 @@ let eat = function(action, player, object) {
 }
 
 
-addAction(eatAction , eat);
+addAction(eatAction, eat);
 addAction(talkAction, talk);
 
 

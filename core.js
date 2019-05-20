@@ -1,10 +1,10 @@
 // Handle user input
-// Handle user input
 
 var regexes = [
   /enter/,
   /go back/,
   /inspect/,
+  /exit/,
 ]
 
 var actions = [
@@ -28,10 +28,16 @@ var actions = [
     }
     return player;
   },
+  function(action, player, object) {
+    if(action == 'exit') {
+      location.reload();
+    }
+    return player;
+  }
 ]
 
 function parse(input) {
-  let articleRegex = / the| a| an/
+  let articleRegex = /the |a |an /
   input = input.replace(articleRegex, '')
   let action;
   let location;
@@ -197,7 +203,7 @@ class Room {
 class Door extends Room {
   constructor(name, descriptor) {
     super(name, descriptor);
-    this.locked = false;
+    this.locked = true;
     this.contents = null;
   }
 
@@ -247,5 +253,32 @@ class Player {
       this.location = destination;
       this.location.readContents();
     }
+  }
+}
+
+class Module extends Room {
+  constructor(name, script, description) {
+    super(name, description);
+    this.script = script;
+  }
+
+  enter() {
+    this.addModule();
+    return this;
+  }
+
+  addModule() {
+    let body = document.getElementsByTagName('body')[0];
+    let script = document.createElement('script');
+    script.type = 'text/javascript';
+    script.onload = function() {
+      //You can put a load thing here.
+    }
+    script.src = this.script;
+    body.appendChild(script);
+  }
+
+  readContents() {
+    console.log("Moving to new module...")
   }
 }
